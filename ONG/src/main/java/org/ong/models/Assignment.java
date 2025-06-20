@@ -22,4 +22,10 @@ public class Assignment {
     private LocalDate assignedDate;
 
     public Assignment() {}
+
+    public Assignment(Donation donation, String notes, LocalDate assignedDate) {
+        this.donation = donation;
+        this.notes = notes;
+        this.assignedDate = assignedDate;
+    }
 }
