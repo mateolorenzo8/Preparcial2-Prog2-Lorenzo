@@ -5,10 +5,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.ong.dto.AssignDonationParams;
-import org.ong.dto.NewDonationParams;
-import org.ong.dto.Result;
-import org.ong.dto.TotalPerTypeSummary;
+import org.ong.dto.*;
 import org.ong.enums.DonorType;
 import org.ong.models.Donation;
 import org.ong.utils.HibernateUtil;
@@ -101,4 +98,21 @@ class ONGTest {
         Assertions.assertEquals(0, donation.getAmount().compareTo(res.get(1).getTotal()));
     }
 
+    @Test
+    void getSummaryPerCategory() {
+        List<TotalCategoryStatusSummary> res = service.getTotalCategoryStatusSummary();
+
+        Assertions.assertEquals(2, res.size());
+
+        Assertions.assertEquals(0, donation1.getAmount().compareTo(res.get(0).getTotal()));
+        Assertions.assertEquals(0, donation.getAmount().compareTo(res.get(1).getTotal()));
+
+        Assertions.assertEquals(1, res.get(0).getCountAssigned());
+        Assertions.assertEquals(1, res.get(1).getCountAssigned());
+        Assertions.assertEquals(0, res.get(0).getCountReceived());
+        Assertions.assertEquals(0, res.get(1).getCountReceived());
+
+        Assertions.assertEquals(donation1.getCategory(), res.get(0).getCategory());
+        Assertions.assertEquals(donation.getCategory(), res.get(1).getCategory());
+    }
 }
