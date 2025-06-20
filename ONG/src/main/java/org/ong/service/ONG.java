@@ -61,7 +61,7 @@ public final class ONG {
         return new Result(true, "Assignment saved successfully");
     }
 
-    public TotalPerTypeSummary getTotalPerTypeSummary() {
+    public List<TotalPerTypeSummary> getTotalPerTypeSummary() {
         try (Session session = HibernateUtil.getSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
             CriteriaQuery<TotalPerTypeSummary> cq = cb.createQuery(TotalPerTypeSummary.class);
@@ -77,11 +77,11 @@ public final class ONG {
                     cb.sum(root.get("amount"))
             ));
 
-            return session.createQuery(cq).getSingleResult();
+            return session.createQuery(cq).getResultList();
         }
     }
 
-    public TotalCategoryStatusSummary getTotalCategoryStatusSummary() {
+    public List<TotalCategoryStatusSummary> getTotalCategoryStatusSummary() {
         try (Session session = HibernateUtil.getSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
             CriteriaQuery<TotalCategoryStatusSummary> cq = cb.createQuery(TotalCategoryStatusSummary.class);
@@ -112,7 +112,7 @@ public final class ONG {
                     donationCount
             ));
 
-            return session.createQuery(cq).getSingleResult();
+            return session.createQuery(cq).getResultList();
         }
     }
 }
